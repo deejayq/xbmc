@@ -818,10 +818,10 @@ unsigned int CActiveAESink::OutputSamples(CSampleBuffer* samples)
       Endian_Swap16_buf((uint16_t *)buffer[0], (uint16_t *)buffer[0], frames * samples->pkt->config.channels);
     else if (m_swapState == NEED_RSHIFT8)
       RShift8_32_buf((uint32_t *)buffer[0], (uint32_t *)buffer[0], frames * samples->pkt->config.channels);
-    else if (m_convertState == SKIP_SWAP)
+    else if (m_convertState == SKIP_OUTPUT)
       frames = 0;
     break;
-  case SKIP_SWAP:
+  case SKIP_OUTPUT:
       frames = 0;
     break;
   }
