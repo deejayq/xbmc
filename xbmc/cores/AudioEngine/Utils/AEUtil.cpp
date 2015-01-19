@@ -182,7 +182,8 @@ const char* CAEUtil::DataFormatToStr(const enum AEDataFormat dataFormat)
     
     "AE_FMT_S24BE4",
     "AE_FMT_S24LE4",
-    "AE_FMT_S24NE4",  /* S24 in 4 bytes */
+    "AE_FMT_S24NE4H",  /* S24 in 4 bytes */
+    "AE_FMT_S24NE4L",  /* S24 in 4 bytes */
     "AE_FMT_S24NE4MSB",
     
     "AE_FMT_S24BE3",
@@ -205,7 +206,8 @@ const char* CAEUtil::DataFormatToStr(const enum AEDataFormat dataFormat)
     "AE_FMT_U8P",
     "AE_FMT_S16NEP",
     "AE_FMT_S32NEP",
-    "AE_FMT_S24NE4P",
+    "AE_FMT_S24NE4HP",
+    "AE_FMT_S24NE4LP",
     "AE_FMT_S24NE4MSBP",
     "AE_FMT_S24NE3P",
     "AE_FMT_DOUBLEP",
@@ -561,7 +563,8 @@ AVSampleFormat CAEUtil::GetAVSampleFormat(AEDataFormat format)
   if      (format == AE_FMT_U8)     return AV_SAMPLE_FMT_U8;
   else if (format == AE_FMT_S16NE)  return AV_SAMPLE_FMT_S16;
   else if (format == AE_FMT_S32NE)  return AV_SAMPLE_FMT_S32;
-  else if (format == AE_FMT_S24NE4) return AV_SAMPLE_FMT_S32;
+  else if (format == AE_FMT_S24NE4H) return AV_SAMPLE_FMT_S32;
+  else if (format == AE_FMT_S24NE4L) return AV_SAMPLE_FMT_S32;
   else if (format == AE_FMT_S24NE4MSB)return AV_SAMPLE_FMT_S32;
   else if (format == AE_FMT_S24NE3) return AV_SAMPLE_FMT_S32;
   else if (format == AE_FMT_FLOAT)  return AV_SAMPLE_FMT_FLT;
@@ -570,7 +573,8 @@ AVSampleFormat CAEUtil::GetAVSampleFormat(AEDataFormat format)
   else if (format == AE_FMT_U8P)     return AV_SAMPLE_FMT_U8P;
   else if (format == AE_FMT_S16NEP)  return AV_SAMPLE_FMT_S16P;
   else if (format == AE_FMT_S32NEP)  return AV_SAMPLE_FMT_S32P;
-  else if (format == AE_FMT_S24NE4P) return AV_SAMPLE_FMT_S32P;
+  else if (format == AE_FMT_S24NE4HP) return AV_SAMPLE_FMT_S32P;
+  else if (format == AE_FMT_S24NE4LP) return AV_SAMPLE_FMT_S32P;
   else if (format == AE_FMT_S24NE4MSBP)return AV_SAMPLE_FMT_S32P;
   else if (format == AE_FMT_S24NE3P) return AV_SAMPLE_FMT_S32P;
   else if (format == AE_FMT_FLOATP)  return AV_SAMPLE_FMT_FLTP;
