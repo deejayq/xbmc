@@ -788,6 +788,12 @@ void CActiveAESink::ReturnBuffers()
   }
 }
 
+static inline void RShift8_32_buf(uint32_t *src, uint32_t *dst, uint32_t count)
+{
+while (count--)
+*dst++ = *src++ >> 8;
+}
+
 unsigned int CActiveAESink::OutputSamples(CSampleBuffer* samples)
 {
   uint8_t **buffer = samples->pkt->data;
@@ -803,12 +809,20 @@ unsigned int CActiveAESink::OutputSamples(CSampleBuffer* samples)
   case NEED_BYTESWAP:
     Endian_Swap16_buf((uint16_t *)buffer[0], (uint16_t *)buffer[0], frames * samples->pkt->config.channels);
     break;
+  case NEED_RSHIFT8:
+    RShift8_32_buf((uint32_t *)buffer[0], (uint32_t *)buffer[0], frames * samples->pkt->config.channels);
+    break;
   case CHECK_SWAP:
     SwapInit(samples);
     if (m_swapState == NEED_BYTESWAP)
       Endian_Swap16_buf((uint16_t *)buffer[0], (uint16_t *)buffer[0], frames * samples->pkt->config.channels);
+    else if (m_swapState == NEED_RSHIFT8)
+      RShift8_32_buf((uint32_t *)buffer[0], (uint32_t *)buffer[0], frames * samples->pkt->config.channels);
+    else if (m_convertState == SKIP_SWAP)
+      frames = 0;
     break;
-  default:
+  case SKIP_SWAP:
+      frames = 0;
     break;
   }
 
